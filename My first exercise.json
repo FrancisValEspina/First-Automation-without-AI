@@ -1,0 +1,188 @@
+{
+  "name": "My first exercise",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1nK__793VBJE4LBt2p1eW7ZCJWtYOy8fIouSr81qgvbY",
+          "mode": "list",
+          "cachedResultName": "Copy of Create Your First Workflow",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nK__793VBJE4LBt2p1eW7ZCJWtYOy8fIouSr81qgvbY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1nK__793VBJE4LBt2p1eW7ZCJWtYOy8fIouSr81qgvbY/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3bfb34dd-18f2-4c75-9e5c-75aaefc447e6",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "j4pLGnG8XDOrNwOn",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Email }}",
+        "subject": "[test N8N]Thank you from Test Company",
+        "emailType": "text",
+        "message": "=Hello {{ $json.Name }}, \n\nThank you for filling out your information to our provided test form.\n\nWish you the best!\nFrancis",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        176,
+        0
+      ],
+      "id": "8e71c097-eec7-4fc8-9ab9-0a183c70c856",
+      "name": "Send a message",
+      "webhookId": "4db1fb59-daf1-480f-817f-8196c159d9b8",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "PFirPMPg7VD659CU",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "givenName": "={{ $('Google Sheets Trigger').item.json.Name }}",
+        "additionalFields": {
+          "emailsUi": {
+            "emailsValues": [
+              {
+                "type": "home",
+                "value": "={{ $('Google Sheets Trigger').item.json.Email }}"
+              }
+            ]
+          },
+          "biographies": "={{ $('Google Sheets Trigger').item.json.Description }}",
+          "phoneUi": {
+            "phoneValues": [
+              {
+                "type": "mobile",
+                "value": "={{ $('Google Sheets Trigger').item.json['Phone Number'].toString() }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleContacts",
+      "typeVersion": 1,
+      "position": [
+        400,
+        0
+      ],
+      "id": "3d105a90-3665-436d-8bb5-7be2c7ff8be4",
+      "name": "Create a contact",
+      "credentials": {
+        "googleContactsOAuth2Api": {
+          "id": "3JcHlnh8Tj5dPIik",
+          "name": "Google Contacts account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "bal.espina18@gmail.com",
+        "subject": "quick notification",
+        "emailType": "text",
+        "message": "=We got someone in our list!\n\nName: {{ $json.names[0].displayName }}\nEmail: {{ $json.emailAddresses[0].value }}\nDescription: {{ $json.biographies[0].value }}\n\nBest,\nFrancis",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        0
+      ],
+      "id": "3c15e3ca-60a8-474d-a7dc-cc6b792c71b4",
+      "name": "Send a message1",
+      "webhookId": "fb472fcb-ee5f-4f68-980c-a208178e7331",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "PFirPMPg7VD659CU",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Create a contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a contact": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "timezone": "Asia/Hong_Kong",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "6b5cde8f-281b-4f98-914c-45e21fe64dab",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cba9a3c68e2dd5c8993ea5913652fac188c879c3d61a318f872100e4626819fe"
+  },
+  "nodeGroups": [],
+  "id": "uyKgMfKo9etSOHhh",
+  "tags": []
+}
