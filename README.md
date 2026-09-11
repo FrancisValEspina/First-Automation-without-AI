@@ -1,11 +1,13 @@
-My First Automation without AI
+# First Automation without AI
 
-This is my very first hands-on project using N8N to build my first portfolio. I discovered AI automation in Social Media (Facebook) 
-on August 21, 2026, and I wanted to learn this skill to upskill and improve job security. I made this one on August 26, 2026.
-I realized that I needed to document my portfolios here.
+This n8n workflow automates lead capture and customer onboarding. It automatically processes new client information from a Google Sheet, updates Google Contacts, and handles email notifications.
 
-What This Workflow Does:
-My trigger checks Google Sheets associated with my personal email (configured to run `everyMinute`).
-Then it sends a "Thank you" message to the email address provided by the client
-The action would be creating a contact in Google Contacts, then sending an email to my personal email to notify that there's
-a client who provided their info from my Google Sheets.
+## What This Workflow Does
+1. Triggers: Checks a Google Sheet every minute for new client data submissions.
+2. Onboarding Email: Automatically sends a "Thank you" email to the address provided by the client.
+3. Contact Management: Creates a new contact record inside Google Contacts using the client's information.
+4. Internal Notification: Sends an alert email to the administrator to notify them that a new client has been added.
+
+## Requirements
+- An account with n8n.
+- A Google Workspace account (for Google Sheets, Google Contacts, and Gmail).
